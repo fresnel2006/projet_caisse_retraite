@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la suppression{% endblock %}
+
+{% block content %}
+<h2>Confirmer la suppression</h2>
+<p>Êtes-vous sûr de vouloir supprimer l'adhérent <strong>{{ adherent.prenom }} {{ adherent.nom }}</strong> ?</p>
+<p>Cette action est irréversible et supprimera également toutes les cotisations associées.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="background: #dc3545;">Oui, supprimer</button>
+    <a href="{% url 'gestion:adherent_detail' pk=adherent.pk %}" class="btn" style="background: #6c757d; margin-left: 1rem;">Annuler</a>
+</form>
+{% endblock %}

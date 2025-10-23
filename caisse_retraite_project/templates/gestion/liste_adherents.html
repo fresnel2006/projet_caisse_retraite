@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Adhérents{% endblock %}
+
+{% block content %}
+<h1 style="color: #4facfe; margin-bottom: 2rem; font-weight: 300;">Liste des Adhérents</h1>
+<a href="{% url 'gestion:adherent_create' %}" class="btn" style="margin-bottom: 2rem;">Ajouter un nouvel adhérent</a>
+{% if adherents %}
+<table>
+    <thead>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for adherent in adherents %}
+        <tr>
+            <td>{{ adherent.prenom }}</td>
+            <td>{{ adherent.nom }}</td>
+            <td>
+                <a href="{% url 'gestion:adherent_detail' pk=adherent.pk %}" class="btn" style="background: #28a745; margin-right: 0.5rem;">Voir</a>
+                <a href="{% url 'gestion:adherent_update' pk=adherent.pk %}" class="btn" style="background: #ffc107; color: #333; margin-right: 0.5rem;">Modifier</a>
+                <a href="{% url 'gestion:adherent_delete' pk=adherent.pk %}" class="btn" style="background: #dc3545;">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align: center; color: #666; font-style: italic;">Aucun adhérent trouvé.</p>
+{% endif %}
+{% endblock %}

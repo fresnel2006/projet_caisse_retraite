@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        background-attachment: fixed;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+    }
+    main {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+    }
+    main::before {
+        display: none;
+    }
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .floating-icon {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5);
+        animation: float 4s ease-in-out infinite, rotate 20s linear infinite;
+        z-index: 1;
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 4rem;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        max-width: 500px;
+        width: 100%;
+        z-index: 2;
+    }
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    }
+    .welcome-text {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .welcome-title {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+        from { text-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        to { text-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+    }
+    .welcome-subtitle {
+        color: #64748b;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    .form-group {
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    .form-label {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        background: white;
+        padding: 0 10px;
+        color: #667eea;
+        font-weight: 600;
+        font-size: 0.9rem;
+        z-index: 3;
+        border-radius: 10px;
+    }
+    .form-input {
+        width: 100%;
+        padding: 1.5rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    .form-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+    .btn-login {
+        width: 100%;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+    .footer-text {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+    .decorative-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+    .decorative-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(102, 126, 234, 0.1);
+        animation: float 6s ease-in-out infinite;
+    }
+    .circle-1 { width: 100px; height: 100px; top: 10%; left: 10%; animation-delay: 0s; }
+    .circle-2 { width: 80px; height: 80px; top: 70%; right: 10%; animation-delay: 2s; }
+    .circle-3 { width: 60px; height: 60px; bottom: 20%; left: 20%; animation-delay: 4s; }
+    .alert-error {
+        background: #fee2e2;
+        color: #dc2626;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        border: 1px solid #fca5a5;
+    }
+</style>
+
+<div class="login-container">
+    <div class="floating-icon">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21C3 22.11 3.89 23 5 23H19C20.11 23 21 22.11 21 21V9M19 9H14V4H19V9Z"/>
+        </svg>
+    </div>
+    <div class="login-card">
+        <div class="decorative-elements">
+            <div class="decorative-circle circle-1"></div>
+            <div class="decorative-circle circle-2"></div>
+            <div class="decorative-circle circle-3"></div>
+        </div>
+        <div class="welcome-text">
+            <h2 class="welcome-title">Bienvenue</h2>
+            <p class="welcome-subtitle">Connectez-vous à votre compte sécurisé</p>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-error">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Nom d'utilisateur</label>
+                {{ form.username|add_class:"form-input" }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}" class="form-label">Mot de passe</label>
+                {{ form.password|add_class:"form-input" }}
+            </div>
+            <button type="submit" class="btn-login">Se connecter</button>
+        </form>
+        <div class="footer-text">
+            <p>🔒 Connectez-vous pour accéder à l'application</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

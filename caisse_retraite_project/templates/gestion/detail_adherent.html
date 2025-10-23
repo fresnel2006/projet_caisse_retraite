@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Détail de {{ adherent }}{% endblock %}
+
+{% block content %}
+<h2>{{ adherent.prenom }} {{ adherent.nom }}</h2>
+<p><strong>Date de naissance :</strong> {{ adherent.date_naissance }}</p>
+<p><strong>Numéro de SS :</strong> {{ adherent.numero_securite_sociale }}</p>
+<p><strong>Date d'adhésion :</strong> {{ adherent.date_adhesion }}</p>
+
+<a href="{% url 'gestion:adherent_update' pk=adherent.pk %}" class="btn" style="background: #ffc107; color: #333; margin-right: 0.5rem;">Modifier cet adhérent</a>
+<a href="{% url 'gestion:adherent_delete' pk=adherent.pk %}" class="btn" style="background: #dc3545; margin-right: 0.5rem;">Supprimer cet adhérent</a>
+<a href="{% url 'gestion:cotisation_create' pk=adherent.pk %}" class="btn" style="background: #28a745;">Ajouter une cotisation</a>
+
+<hr>
+
+<h3>Historique des cotisations</h3>
+<ul>
+    {% for cotisation in cotisations %}
+    <li>{{ cotisation.date_versement }} : {{ cotisation.montant }}€</li>
+    {% empty %}
+    <li>Aucune cotisation enregistrée pour cet adhérent.</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

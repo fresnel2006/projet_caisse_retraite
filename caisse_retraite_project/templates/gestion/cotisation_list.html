@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Adhérents avec Cotisations{% endblock %}
+
+{% block content %}
+<h2>Liste des Adhérents ayant payé des Cotisations</h2>
+{% if adherents_with_totals %}
+<table>
+    <thead>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Nombre de Cotisations</th>
+            <th>Total Payé (€)</th>
+            <th>Cotisations</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in adherents_with_totals %}
+        <tr>
+            <td>{{ item.adherent.prenom }}</td>
+            <td>{{ item.adherent.nom }}</td>
+            <td>{{ item.adherent.cotisations.count }}</td>
+            <td>{{ item.total }} €</td>
+            <td>
+                <ul>
+                    {% for cotisation in item.adherent.cotisations.all %}
+                    <li>{{ cotisation.montant }} € le {{ cotisation.date_versement }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align: center; color: #666; font-style: italic;">Aucun adhérent avec cotisations trouvé.</p>
+{% endif %}
+{% endblock %}
